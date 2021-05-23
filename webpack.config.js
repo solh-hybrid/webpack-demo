@@ -1,9 +1,18 @@
 const path = require('path');
+const webpack = require('webpack')
 module.exports = {
-  entry: './src/index.js',
-  mode: 'development',
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-};  
+    mode: 'development',
+    entry: {
+      app: ['./src/index.js']
+    },
+    output: {
+        filename: 'main.js',
+        path: path.join(__dirname, 'dist')
+      },
+      plugins: [
+        new webpack.DllReferencePlugin({
+          context: __dirname,
+          manifest: require('./dist/library.json')
+        })
+    ]
+};    
