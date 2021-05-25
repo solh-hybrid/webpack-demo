@@ -1,31 +1,19 @@
+var webpack = require('webpack')
 const path = require('path');
-const webpack = require('webpack')
-
 module.exports = {
-  context: process.cwd(),
-  resolve: {
-    extensions: ['.js', '.jsx', '.json', '.less', '.css'],
-    modules: [__dirname, 'node_modules']
-  },
-  entry: {
-    library: [
-      'react',
-      'redux',
-      'jquery',
-      'd3',
-      'highcharts',
-      'bootstrap',
-      'angular'
+    mode: 'development',
+    entry: {
+        vendor: ['lodash', 'react', 'angular', 'bootstrap', 'd3', 'jquery', 'highcharts', 'vue']
+    },
+    output: {
+        filename: 'vendor.bundle.js',
+        path: path.join(__dirname, 'dist'),
+        library: 'vendor_lib'
+    },
+    plugins: [
+        new webpack.DllPlugin({
+            name: 'vendor_lib',
+            path: path.join(__dirname, 'dist', 'vendor-manifest.json')
+        })
     ]
-  },
-  mode: 'development',
-  output: {
-    filename: '[name].dll.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-  plugins: [
-    new webpack.DllPlugin({
-      path: path.resolve(__dirname, 'dist/[name].json'),
-    })
-  ]
-};    
+}

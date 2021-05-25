@@ -1,18 +1,22 @@
-const path = require('path');
-const webpack = require('webpack')
-module.exports = {
+const webpack = require("webpack")
+var path = require("path");
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+module.exports = smp.wrap ({
     mode: 'development',
     entry: {
-      app: ['./src/index.js']
+        app: ['./src/index.js']
     },
     output: {
-        filename: 'main.js',
+        filename: 'main.bundle.js',
         path: path.join(__dirname, 'dist')
-      },
-      plugins: [
+    },
+    plugins: [
         new webpack.DllReferencePlugin({
-          context: __dirname,
-          manifest: require('./dist/library.json')
-        })
+            context: __dirname,
+            manifest: path.join(__dirname, 'dist', 'vendor-manifest.json')
+        }),
+        // new BundleAnalyzerPlugin()
     ]
-};    
+})

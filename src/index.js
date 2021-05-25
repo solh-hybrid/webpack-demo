@@ -1,10 +1,21 @@
-import _ from 'lodash';
-function component() {
-    const element = document.createElement('div');
-  
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    return element;
-  }
-  
-document.body.appendChild(component());
+import 'jquery'
+import Vue from "vue"
+import lodash from 'lodash'
+import 'react'
+import 'angular'
+import 'd3'
+import 'highcharts'
+export default function createApp() {
+    // vendor()
+    const el = document.createElement("div")
+    el.setAttribute("id", "app")
+    document.body.appendChild(el)
+    console.log("hello")
+    new Vue({
+        el: "#app",
+        render: h => h("h1", "Hello world")
+})
+}
+document.addEventListener('DOMContentLoaded', () => {
+    createApp()
+})
